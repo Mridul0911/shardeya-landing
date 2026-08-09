@@ -2,12 +2,19 @@
 
 import dynamic from "next/dynamic";
 import CanvasBoundary from "@/components/canvas-boundary";
+import { useMagnetic } from "@/hooks/use-magnetic";
 
 const HeroScene = dynamic(() => import("@/components/hero-scene"), {
   ssr: false,
 });
 
 export default function Hero() {
+  const {
+    ref: magneticRef,
+    onMouseMove: onMagneticMove,
+    onMouseLeave: onMagneticLeave,
+  } = useMagnetic<HTMLAnchorElement>();
+
   return (
     <section
       id="top"
@@ -55,8 +62,11 @@ export default function Hero() {
           style={{ animation: "fade-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.66s forwards" }}
         >
           <a
+            ref={magneticRef}
+            onMouseMove={onMagneticMove}
+            onMouseLeave={onMagneticLeave}
             href="#contact"
-            className="rounded-full bg-brass px-7 py-3.5 text-sm font-medium text-obsidian transition-transform duration-300 hover:scale-[1.03] hover:bg-brass-soft"
+            className="rounded-full bg-brass px-7 py-3.5 text-sm font-medium text-obsidian transition-all duration-200 ease-out hover:bg-brass-soft"
           >
             Get Started
           </a>

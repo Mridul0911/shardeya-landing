@@ -1,9 +1,15 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
+import { useMagnetic } from "@/hooks/use-magnetic";
 
 export default function FinalCta() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.4 });
+  const {
+    ref: magneticRef,
+    onMouseMove: onMagneticMove,
+    onMouseLeave: onMagneticLeave,
+  } = useMagnetic<HTMLAnchorElement>();
 
   return (
     <section
@@ -41,8 +47,11 @@ export default function FinalCta() {
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
+            ref={magneticRef}
+            onMouseMove={onMagneticMove}
+            onMouseLeave={onMagneticLeave}
             href="#top"
-            className="rounded-full bg-brass px-8 py-3.5 text-sm font-medium text-obsidian transition-transform duration-300 hover:scale-[1.03] hover:bg-brass-soft"
+            className="rounded-full bg-brass px-8 py-3.5 text-sm font-medium text-obsidian transition-all duration-200 ease-out hover:bg-brass-soft"
           >
             Start Free
           </a>

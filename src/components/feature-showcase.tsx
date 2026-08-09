@@ -44,7 +44,21 @@ function Block({
         dark ? "bg-obsidian text-bone" : "bg-bone text-obsidian"
       )}
     >
-      <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
+      {dark && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(199,161,89,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(199,161,89,0.6) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            maskImage:
+              "radial-gradient(ellipse 70% 90% at 75% 50%, black, transparent)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 70% 90% at 75% 50%, black, transparent)",
+          }}
+        />
+      )}
+      <div className="relative mx-auto max-w-[1400px] px-6 sm:px-10">
         <div
           className={clsx(
             "grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20",

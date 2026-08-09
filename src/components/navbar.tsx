@@ -13,6 +13,7 @@ const LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState<string | null>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -21,6 +22,23 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = LINKS.map((link) =>
+      document.querySelector(link.href)
+    ).filter((el): el is Element => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        if (visible) setActiveHref(`#${visible.target.id}`);
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -41,17 +59,29 @@ export default function Navbar() {
         </a>
 
         <ul className="hidden items-center gap-9 md:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="group relative text-sm text-bone/75 transition-colors hover:text-bone"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-brass transition-all duration-300 group-hover:w-full" />
-              </a>
-            </li>
-          ))}
+          {LINKS.map((link) => {
+            const isActive = activeHref === link.href;
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className={clsx(
+                    "group relative text-sm transition-colors hover:text-bone",
+                    isActive ? "text-bone" : "text-bone/75"
+                  )}
+                >
+                  {link.label}
+                  <span
+                    className={clsx(
+                      "absolute -bottom-1 left-0 h-px bg-brass transition-all duration-300",
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    )}
+                  />
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="hidden items-center gap-4 md:flex">

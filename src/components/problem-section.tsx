@@ -12,7 +12,7 @@ type ChaosCard = {
 
 const cards: ChaosCard[] = [
   {
-    className: "left-[2%] top-[4%] w-[230px] sm:w-[250px]",
+    className: "left-[2%] top-[2%] w-[230px] sm:w-[250px]",
     rot: -6,
     delay: 0,
     content: (
@@ -33,7 +33,7 @@ const cards: ChaosCard[] = [
     ),
   },
   {
-    className: "left-[30%] top-[0%] w-[240px] sm:w-[260px]",
+    className: "left-[27%] top-[16%] w-[240px] sm:w-[260px]",
     rot: 4,
     delay: 0.12,
     content: (
@@ -66,7 +66,7 @@ const cards: ChaosCard[] = [
     ),
   },
   {
-    className: "right-[4%] top-[2%] w-[200px] sm:w-[215px]",
+    className: "right-[2%] top-[0%] w-[200px] sm:w-[215px]",
     rot: -3,
     delay: 0.24,
     content: (
@@ -76,7 +76,7 @@ const cards: ChaosCard[] = [
     ),
   },
   {
-    className: "left-[16%] top-[46%] w-[250px] sm:w-[270px]",
+    className: "left-[6%] top-[54%] w-[250px] sm:w-[270px]",
     rot: 3,
     delay: 0.36,
     content: (
@@ -96,7 +96,7 @@ const cards: ChaosCard[] = [
     ),
   },
   {
-    className: "right-[10%] top-[44%] w-[210px] sm:w-[225px]",
+    className: "right-[16%] top-[58%] w-[210px] sm:w-[225px]",
     rot: 6,
     delay: 0.48,
     content: (
@@ -107,6 +107,26 @@ const cards: ChaosCard[] = [
         </div>
         <div className="text-[11px] text-[#2b2b2b]/60">
           Enquiry — Colony Phase 2
+        </div>
+      </div>
+    ),
+  },
+  {
+    className: "left-[38%] top-[62%] w-[235px] sm:w-[250px]",
+    rot: -4,
+    delay: 0.6,
+    content: (
+      <div className="rounded-lg border border-black/10 bg-white font-sans text-[12px] text-[#2b2b2b] shadow-[0_18px_30px_-14px_rgba(0,0,0,0.35)]">
+        <div className="border-b border-black/5 bg-[#f5f5f5] px-3 py-1.5 text-[11px] text-[#666]">
+          📁 Downloads
+        </div>
+        <div className="flex flex-col gap-1.5 px-3 py-2.5 text-[#333]">
+          <span>IMG_2847.jpg</span>
+          <span>Agreement_FINAL_v3.pdf</span>
+          <span className="text-[#b23c2f]">
+            Agreement_FINAL_v3_ACTUAL.pdf
+          </span>
+          <span className="text-[#999]">Untitled(2).xlsx</span>
         </div>
       </div>
     ),
@@ -140,7 +160,7 @@ export default function ProblemSection() {
 
         <div
           className={clsx(
-            "relative mt-16 hidden h-[560px] md:block",
+            "relative mt-16 hidden h-[480px] md:block",
             "before:pointer-events-none"
           )}
         >
@@ -166,7 +186,7 @@ export default function ProblemSection() {
           ))}
         </div>
 
-        <div className="mt-20 flex items-center gap-6 border-t border-obsidian/10 pt-10">
+        <div className="mt-12 flex items-center gap-6 border-t border-obsidian/10 pt-10">
           <span className="font-display text-2xl italic text-brass-deep">
             Until now.
           </span>
