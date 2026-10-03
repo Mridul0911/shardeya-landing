@@ -3,52 +3,151 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    background-color: #F8FAFC;
-    color: #0F172A;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    @apply bg-ivory-100 font-sans text-ink-900 antialiased;
+    font-feature-settings: 'cv11', 'ss01';
     overflow-x: hidden;
-    letter-spacing: -0.01em;
   }
 
-  h1, h2, h3 {
-    letter-spacing: -0.025em;
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-emerald-600 text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-emerald-500 ring-offset-2 ring-offset-ivory-100;
+  }
+
+  /* Devanagari needs a little more air than Latin */
+  html[lang='hi'] body {
+    line-height: 1.65;
+  }
+  /* Fonts fall back per glyph (Fraunces → Noto Serif Devanagari); only tracking needs resetting. */
+  html[lang='hi'] .font-display {
+    letter-spacing: 0 !important;
   }
 }
 
-/* Luminous High-Tech Micro Grid */
-.drafting-grid {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-600;
+  }
+
+  .h-section {
+    @apply font-display text-[2rem] font-medium leading-[1.12] tracking-[-0.02em] text-ink-900 sm:text-[2.6rem];
+    font-variation-settings: 'opsz' 96;
+  }
+
+  .lead {
+    @apply text-base leading-relaxed text-ink-600 sm:text-[1.0625rem];
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Hairline paper texture used behind product frames */
+  .bg-plot-grid {
+    background-image: linear-gradient(to right, rgba(15, 28, 43, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 28, 43, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-plot-grid-dark {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-/* Multi-Color Luminous Ambient Glow (Emerald, Amber & Indigo) */
-.bg-ambient-warm, .bg-ambient-luminous {
-  background-color: #F8FAFC;
-  background-image: 
-    radial-gradient(ellipse at 15% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 10%, rgba(245, 158, 11, 0.10) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 20% 85%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
+/* Scroll reveal — content is visible by default; JS opts elements in. */
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-ready .reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
-/* Custom Vibrant Minimalist Scrollbar */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal-ready .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #F1F5F9;
+/* Range input used in the commission calculator */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #156b55 0 var(--pct, 50%), #ece6d8 var(--pct, 50%) 100%);
+  cursor: pointer;
 }
-
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 6px solid #156b55;
+  box-shadow: 0 2px 6px rgba(15, 28, 43, 0.25);
+  transition: transform 0.15s ease;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: #059669;
+.range::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+.range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 6px solid #156b55;
+  box-shadow: 0 2px 6px rgba(15, 28, 43, 0.25);
+}
+.range:focus-visible {
+  outline: 2px solid #1f7f66;
+  outline-offset: 4px;
 }
